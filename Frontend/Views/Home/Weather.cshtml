@@ -1,0 +1,15 @@
+﻿@model Frontend.Controllers.HomeController.WeatherViewModel
+@{
+	ViewData["Title"] = "Weather";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Hello @User?.Identity?.Name</p>
+@foreach (var day in Model.Days)
+{
+	<div class="card m-2">
+		<span>@day.Date:</span>
+		<span>@day.TemperatureC°C</span>
+		<span>(@day.Summary)</span>
+	</div>
+}
