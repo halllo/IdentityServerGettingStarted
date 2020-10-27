@@ -18,6 +18,8 @@ namespace Api
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.AddCors(options => options.AddPolicy("mycustomcorspolicy", b => b.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader()));
+
 			services.AddControllers();
 
 			services.AddAuthentication("Bearer")
@@ -36,7 +38,8 @@ namespace Api
 			}
 
 			app.UseHttpsRedirection();
-
+			
+			app.UseCors("mycustomcorspolicy");
 			app.UseRouting();
 
 			app.UseAuthentication();

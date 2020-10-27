@@ -20,7 +20,7 @@ namespace Frontend
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
-			//System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
 			services.AddAuthentication(options =>
 			{
 				options.DefaultScheme = "cookie";
