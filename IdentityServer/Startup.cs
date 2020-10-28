@@ -16,7 +16,8 @@ namespace IdentityServer
 				.AddInMemoryApiResources(Resources.GetApiResources())
 				.AddInMemoryApiScopes(Resources.GetApiScopes())
 				.AddTestUsers(Users.Get())
-				.AddDeveloperSigningCredential();
+				.AddDeveloperSigningCredential()
+				.AddScopeParser<FilteringScopeParser>();
 
 			services.AddControllersWithViews();
 		}

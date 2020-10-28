@@ -10,7 +10,7 @@ export const environment = {
   oidc: {
     authority: 'https://localhost:44304/',
     clientId: 'frontend-angular',
-    scope: 'openid profile email api1.read'
+    scope: 'openid profile email api1.read api1.write'
   }
 
 };

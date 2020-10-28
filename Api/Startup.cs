@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +30,21 @@ namespace Api
 					options.ApiName = "api1";
 					options.Authority = this.Configuration["Authority"];
 				});
+
+			services.AddAuthorization(options =>
+			{
+				options.AddPolicy("read", policy =>
+				{
+					policy.RequireAuthenticatedUser();
+					policy.Requirements.Add(new HasScopeRequirement(scope: "api1.read"));
+				});
+				options.AddPolicy("write", policy =>
+				{
+					policy.RequireAuthenticatedUser();
+					policy.Requirements.Add(new HasScopeRequirement(scope: "api1.write"));
+				});
+			});
+			services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,7 +55,7 @@ namespace Api
 			}
 
 			app.UseHttpsRedirection();
-			
+
 			app.UseCors("mycustomcorspolicy");
 			app.UseRouting();
 

@@ -46,8 +46,6 @@ namespace Frontend.Controllers
 			{
 				http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
 
-				//https://localhost:44304/connect/userinfo
-
 				var response = await http.GetAsync(new Uri(this.config["ApiUrl"]) + "weatherforecast");
 				if (response.IsSuccessStatusCode)
 				{

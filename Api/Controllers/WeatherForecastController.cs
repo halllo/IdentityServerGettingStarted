@@ -7,7 +7,6 @@ namespace Api.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	[Authorize]
 	public class WeatherForecastController : ControllerBase
 	{
 		private static readonly string[] Summaries = new[]
@@ -15,7 +14,9 @@ namespace Api.Controllers
 			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 		};
 
+
 		[HttpGet]
+		[Authorize("read")]
 		public IActionResult Get()
 		{
 			var rng = new Random();
@@ -26,6 +27,14 @@ namespace Api.Controllers
 				Summary = Summaries[rng.Next(Summaries.Length)]
 			})
 			.ToArray());
+		}
+
+
+		[HttpPost]
+		[Authorize("write")]
+		public IActionResult Set()
+		{
+			return Accepted();
 		}
 	}
 }

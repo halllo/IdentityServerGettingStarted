@@ -23,7 +23,7 @@ export class Api {
   }
 
   public post(): Observable<Object> {
-    return this.http.post(environment.backend_api + '/api/books/', {}, {
+    return this.http.post(environment.backend_api + '/weatherforecast', {}, {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.auth.accessToken}`
       })

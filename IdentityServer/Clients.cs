@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using IdentityServer4;
 using IdentityServer4.Models;
 
@@ -13,6 +14,22 @@ namespace IdentityServer
 			{
 				new Client
 				{
+					ClientId = "console",
+					ClientName = "Console Client",
+					ClientSecrets = new List<Secret> {new Secret("secret".Sha256())},
+
+					AllowedGrantTypes = new []{ GrantType.ClientCredentials, GrantType.DeviceFlow },
+					AllowedScopes = new List<string>
+					{
+						IdentityServerConstants.StandardScopes.OpenId,
+						IdentityServerConstants.StandardScopes.Profile,
+						IdentityServerConstants.StandardScopes.Email,
+						"api1.read",
+						"api1.write"
+					},
+				},
+				new Client
+				{
 					ClientId = "frontend",
 					ClientName = "Frontend (ASP.NET MVC)",
 					ClientSecrets = new List<Secret> {new Secret("secret".Sha256())},
@@ -24,11 +41,11 @@ namespace IdentityServer
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile,
 						IdentityServerConstants.StandardScopes.Email,
-						"api1.read"
+						"api1.read",
+						"api1.write"
 					},
 
 					RequirePkce = true,
-					AllowPlainTextPkce = false,
 				},
 				new Client
 				{
@@ -47,15 +64,15 @@ namespace IdentityServer
 						IdentityServerConstants.StandardScopes.OpenId,
 						IdentityServerConstants.StandardScopes.Profile,
 						IdentityServerConstants.StandardScopes.Email,
-						"api1.read"
+						"api1.read",
+						"api1.write"
 					},
 
 					RequirePkce = true,
-					AllowPlainTextPkce = false,
 					RequireClientSecret = false,
 					AccessTokenLifetime = (int)TimeSpan.FromMinutes(2).TotalSeconds,
 				}
-	};
+			};
 		}
 	}
 }
