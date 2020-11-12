@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -37,6 +36,10 @@ namespace IdentityServer
 
 			app.UseEndpoints(endpoints =>
 			{
+				/*
+				 * Getting basic UI (https://github.com/IdentityServer/IdentityServer4.Quickstart.UI):
+				 * iex((New - Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/IdentityServer/IdentityServer4.Quickstart.UI/main/getmain.ps1'))
+				 */
 				endpoints.MapDefaultControllerRoute();
 			});
 		}
