@@ -1,3 +1,7 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +49,18 @@ namespace Frontend
 						NameClaimType = "email",
 					};
 					options.ClaimActions.MapUniqueJsonKey("email", "email");
+
+					options.Events.OnTicketReceived = ctx =>
+					{
+						var accessToken = ctx.Properties.GetTokenValue("access_token");
+						var jwtTokenHandler = new JwtSecurityTokenHandler();
+						var jwt = jwtTokenHandler.ReadJwtToken(accessToken);
+						var scopes = jwt.Claims.Where(c => c.Type == "scope");
+						var scopeIdentity = new ClaimsIdentity(scopes);
+						ctx.Principal.AddIdentity(scopeIdentity);
+
+						return Task.CompletedTask;
+					};
 				});
 		}
 
